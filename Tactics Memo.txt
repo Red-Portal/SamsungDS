@@ -1,0 +1,19 @@
+Monte Carlo method
+Alpha-Beta prunning (aka minimax)
+depth bound or time bound
+multithreading (8 concurrent threads)
+priority table lookup
+minimax guided monte carlo method
+monte carlo methods are tipically time bound.
+monte carlo methods are fast, efficient but less accurate (shallow trap)
+
+
+heuristic
+1. sequence over 6 are considered as 0 points.
+2. sequence with both edges blocked by either the enemy or a block
+   is considered as 0 points
+3. sequence with one edge bound is supposed to be inferior to
+   an equivalent but unbound sequence.
+4. an equivalent sequence is supposed to be weighted if it's of the enemy.
+5. _ | / \ a total of 4 rows for lookup. / \ rows have less lookup area
+   because the edges are narrower.
