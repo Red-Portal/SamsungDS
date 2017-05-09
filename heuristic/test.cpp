@@ -15,12 +15,14 @@ int showBoard(int x, int y)
 int main()
 {
 
-	vec[0][0] = 1;
 	vec[0][1] = 1;
 	vec[0][2] = 1;
 	vec[0][3] = 1;
-	vec[0][4] = 1;
+	//vec[0][4] = 1;
 	vec[0][5] = 1;
+	vec[0][6] = 1;
+	vec[0][7] = 1;
+	vec[0][8] = 1;
 
 	for(int i = 0; i < 19; ++i)
 		for(int j = 0; j < 19; ++j)

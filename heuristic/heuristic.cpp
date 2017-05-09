@@ -3,8 +3,6 @@
 
 int Heuristic::compute()
 {
-	using namespace Heuristic::Constants;
-
 	int score = 0;
 
 	/********* horizontal rows *********/
@@ -16,7 +14,7 @@ int Heuristic::compute()
 	}
 	/**********************************/
 
-	if(score > CEILING || score < FLOOR)
+	if(score > Constants::CEILING || score < Constants::FLOOR)
 		return score;
 
 
@@ -39,7 +37,7 @@ int Heuristic::compute()
 
 	}
 
-	if(score > CEILING || score < FLOOR)
+	if(score > Constants::CEILING || score < Constants::FLOOR)
 		return score;
 
 	for(int i = 5; i < 19; ++i)
@@ -50,7 +48,7 @@ int Heuristic::compute()
 	}
 	/*******************************/
 
-	if(score > CEILING || score < FLOOR)
+	if(score > Constants::CEILING || score < Constants::FLOOR)
 		return score;
 
 	/*********** \ rows ***********/
@@ -62,7 +60,7 @@ int Heuristic::compute()
 	
 	}
 
-	if(score > CEILING || score < FLOOR)
+	if(score > Constants::CEILING || score < Constants::FLOOR)
 		return score;
 
 	for(int i = 5; i < 19; ++i)
@@ -75,7 +73,3 @@ int Heuristic::compute()
 	/*****************************/
 	return score;	
 }
-
-
-
-

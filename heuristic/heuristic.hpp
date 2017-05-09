@@ -53,42 +53,46 @@ namespace Heuristic
 		if(id == EMPTY || id == BLOCK) //short circuit
 			return 0;
 
+		int extreme;
+		int weight;
+		IDENTIFIER other; // the opponent of 'the current id'
+
 		if(id == ME)
 		{
-			if(first == last && first == (OPONENT || BLOCK))
-				return 0;
+			other = OPONENT;
+			weight = 1;
+			extreme = Constants::CEILING;
+		} // setting parameters
 
-			else if(first == last && first == EMPTY)
-				return bothOpen(count);
-			else
-			{
-				if(first == EMPTY || last == EMPTY)
-					return oneOpen(count);
-
-				return 0;
-			}
-		}
 		else if(id == OPONENT)
 		{
-			
-			if(first == last && first == (ME || BLOCK))
-				return 0;
+			other = ME;
+			weight = Constants::enemyWeight;
+			extreme = Constants::FLOOR;
+		} // setting parameters
 
-			else if(first == last && first == EMPTY)
-				return Constants::enemyWeight * bothOpen(count);
-			else
-			{
-				if(first == EMPTY || last == EMPTY)
-					return Constants::enemyWeight * oneOpen(count);
+		if(count == 6) // extreme case (FLOOR or CEILING)
+			return extreme;
 
-				return 0;
-			}
+		if(count > 6)
+			return 0;
+
+		if(first == last && first == (other || BLOCK))
+			return 0;
+
+		else if(first == last && first == EMPTY)
+			return weight * bothOpen(count);
+		else
+		{
+			if(first == EMPTY || last == EMPTY)
+				return weight * oneOpen(count);
+
+			return 0;
 		}
-
 		return 0;
 	}
 
-	// this function is a generic row computation function
+// this function is a generic row computation function
 	template<typename _Op>
 	int computeRow(Point const& start,
 				   Point const& end,
@@ -118,7 +122,7 @@ namespace Heuristic
 									  log.back(),
 									  currentID);
 				log.push_back(currentID);
-				count = 0;
+				count = 1;
 			}
 		}
 
@@ -129,6 +133,7 @@ namespace Heuristic
 							  BLOCK);
 		return score;
 	}
+
 	int compute();
 }
 
