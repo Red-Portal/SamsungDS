@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "Point.hpp"
+#include "Dummy.hpp"
 
 namespace AlphaBeta
 {

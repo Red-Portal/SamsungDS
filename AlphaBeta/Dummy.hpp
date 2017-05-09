@@ -1,7 +1,8 @@
 #ifndef DUMMY_HPP
 #define DUMMY_HPP
 
-int heuristic();
+class Table;
+int heuristic(Table const&);
 int showBoard(int x, int y);
 
 #endif

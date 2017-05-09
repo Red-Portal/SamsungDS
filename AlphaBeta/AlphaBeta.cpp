@@ -2,67 +2,8 @@
 #include <vector>
 #include <tuple>
 
-#include "Dummy.hpp"
 #include "AlphaBeta.hpp"
 #include "Point.hpp"
-
-/*
-int AlphaBeta::alphaBeta(Point node,
-						 int table,
-						 int depth,
-						 int alpha,
-						 int beta,
-						 Player current)
-{
-	if(depth == 0 || Constants::CEILING)
-		;
-
-	int v;
-
-	if(current == ME)
-	{
-		v = Constants::FLOOR;
-
-		while(LookupTable::isNext())
-		{
-			v = std::max(v, alphaBeta(LookupTable::getBest(),
-									  table,
-									  depth - 1,
-									  alpha,
-									  beta,
-									  OPONENT));
-			LookupTable::revert();
-			alpha = std::max(alpha, v);
-
-			if(beta <= alpha)
-				break;
-		}
-		return v;
-	}
-	else
-	{
-		v = Constants::CEILING;
-
-		while(LookupTable::isNext())
-		{
-			v = std::min(v, alphaBeta(LookupTable::getWorst(),
-									  table,
-									  depth - 1,
-									  alpha,
-									  beta,
-									  ME));
-			LookupTable::revert();
-			beta = std::min(beta, v);
-
-			if(beta <= alpha)
-				break;
-		}
-		return v;
-	}
-
-	return 0;
-}
-*/
 
 AlphaBeta::Table::Table(bool flag)
 {
@@ -183,4 +124,84 @@ int AlphaBeta::alphaBeta(Table& table,
 						 IDENTIFIER current)
 {
 	
+	if(depth == 0)
+		return heuristic(table); // must add additional stop conditions
+	// such as "no more move available"
+
+	int v;
+
+	if(current == ME)
+	{
+		v = Constants::FLOOR;
+
+		for(int i = 0; i < 19 * 19; ++i)
+		{
+			if(table.table[i] != 0)
+				continue;
+
+			table.table[i] = ME;
+
+			for(int j = 0; j < 19 * 19; ++j)
+			{
+				if(table.table[j] != 0)
+					continue;
+
+				table.table[j] = ME;
+
+				v = std::max(v, alphaBeta(
+								 table,
+								 depth - 1,
+								 alpha,
+								 beta,
+								 OPONENT));
+				// revert
+				table.table[i] = NOTHING;
+
+				alpha = std::max(alpha, v);
+
+				if(beta <= alpha)
+					break;
+			}
+
+			table.table[i] = NOTHING;
+		}
+		return v;
+	}
+	else
+	{
+		for(int i = 0; i < 19 * 19; ++i)
+		{
+			if(table.table[i] != 0)
+				continue;
+
+			table.table[i] = OPONENT;
+
+			for(int j = 0; j < 19 * 19; ++j)
+			{
+				if(table.table[j] != 0)
+					continue;
+
+				table.table[j] = OPONENT;
+
+				v = std::max(v, alphaBeta(
+								 table,
+								 depth - 1,
+								 alpha,
+								 beta,
+								 ME));
+				// revert
+				table.table[i] = NOTHING;
+
+				alpha = std::max(alpha, v);
+
+				if(beta <= alpha)
+					break;
+			}
+
+			table.table[i] = NOTHING;
+		}
+		return v;
+	}
+
+	return 0;
 }
