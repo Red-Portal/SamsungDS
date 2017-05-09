@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 11)
 set(SOURCE_FILES
 	heuristic.hpp
 	heuristic.cpp
+	dummy.hpp
+	point.hpp
 	test.cpp)
 
 add_executable(heuristic ${SOURCE_FILES})
